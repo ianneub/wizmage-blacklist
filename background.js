@@ -34,9 +34,18 @@ chrome.runtime.onMessage.addListener(
                             }
                         }
                         var lowerUrl = tab.url.toLowerCase();
-                        for (var i = 0; i < urlList.length; i++) {
+                        var allowed = true;
+                        for (var i = 0; i < urlList.length; i++) {                            
                             if (lowerUrl.indexOf(urlList[i]) != -1)
-                            { settings.isExcluded = true; break; }
+                            {
+                                allowed = false;
+                            }
+                        }
+                        console.log(lowerUrl, allowed);
+                        if (!allowed) {
+                            settings.isExcluded = false;
+                        } else {
+                            settings.isExcluded = true;
                         }
                     }
                 }
